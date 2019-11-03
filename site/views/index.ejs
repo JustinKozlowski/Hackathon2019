@@ -20,5 +20,99 @@
             <div class="shopping-list"></div>
         </div>
         <script src="/javascripts/search.js"></script>
+	<script type="text/javascript">
+	    var canvas, ctx, flag = false,
+		prevX = 0,
+		currX = 0,
+		prevY = 0,
+		currY = 0,
+		dot_flag = false;
+
+	    var x = "red",
+		y = 2;
+
+	    function init() {
+		canvas = document.getElementById('layer2');
+		ctx = canvas.getContext("2d");
+		w = canvas.width;
+		h = canvas.height;
+	    }
+	    
+
+	    function draw() {
+		ctx.beginPath();
+		ctx.moveTo(prevX, prevY);
+		ctx.lineTo(currX, currY);
+		ctx.strokeStyle = x;
+		ctx.lineWidth = y;
+		ctx.stroke();
+		ctx.closePath();
+	    }
+
+	    
+
+	    function findxy(res, e) {
+		if (res == 'down') {
+		    prevX = currX;
+		    prevY = currY;
+		    currX = e.clientX - canvas.offsetLeft;
+		    currY = e.clientY - canvas.offsetTop;
+
+		    flag = true;
+		    dot_flag = true;
+		    if (dot_flag) {
+			ctx.beginPath();
+			ctx.fillStyle = x;
+			ctx.fillRect(currX, currY, 2, 2);
+			ctx.closePath();
+			dot_flag = false;
+		    }
+		}
+		if (res == 'up' || res == "out") {
+		    flag = false;
+		}
+		if (res == 'move') {
+		    if (flag) {
+			prevX = currX;
+			prevY = currY;
+			currX = e.clientX - canvas.offsetLeft;
+			currY = e.clientY - canvas.offsetTop;
+			draw();
+		    }
+		}
+	    }
+	var canvas = document.getElementById("layer1"),
+		ctx = canvas.getContext("2d"),
+		image = document.getElementById("wegmansUncropped");
+
+	canvas.height = 495;
+	canvas.width = 782;
+	ctx.drawImage(image,0,0);
+
+	var imgd = ctx.getImageData(0, 0, 782, 495),
+		pix = imgd.data,
+		newColor = {r:0,g:0,b:0, a:0};
+
+	for (var i = 0, n = pix.length; i <n; i += 4) {
+		var r = pix[i],
+			g = pix[i+1],
+			b = pix[i+2];
+
+		// If its white then change it
+		if(r == 255 && g == 255 && b == 255){
+			// Change the white to whatever.
+			pix[i] = newColor.r;
+			pix[i+1] = newColor.g;
+			pix[i+2] = newColor.b;
+			pix[i+3] = newColor.a;
+		}
+	}
+
+	ctx.putImageData(imgd, 0, 0);​
+    	</script>
+	<div style="position: relative;">
+ 		<canvas id="layer1" width="782" height="495" style="position: absolute; left: 0; top: 500; z-index: 0;"></canvas>
+ 		<canvas id="layer2" width="782" height="495" style="position: absolute; left: 0; top: 500; z-index: 1;"></canvas>
+	</div>
     </body>
 </html>

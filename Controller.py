@@ -93,11 +93,11 @@ def getItemWeight(weight):
 def start(dataJson):
     items = itemList(dataJson['items'])
     sortedList = GridLogic.mySort(items, dataJson['workout'])
-    Node1 = nodeLoc(items[0]['aisle'], items[0]['sort'], items[0]['side'])
+    Node1 = (84,67)
     path = []
     caloriesBurned = 0
     weight = 0
-    for x in range(1,len(items)):
+    for x in range(len(items)):
         Node2 = nodeLoc(items[x]['aisle'], items[x]['sort'], items[x]['side'])
         tempPath = bfs(np_img, Node1, Node2)
         path+=tempPath

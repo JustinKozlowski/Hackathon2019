@@ -60,7 +60,7 @@ def nodeLoc(aisle, sort, side):
     else:
         x = nodeDict[aisle][0]
         y = nodeDict[aisle][1]
-    return [x, y]
+    return (x, y)
 
 
 def bfs(grid, start, goal):
@@ -90,11 +90,10 @@ def GetMets(carttype, weight):
         else:
             return (weight*0.133 + 1)
 
-def MetsMath(Node1, Node2, carttype, weight, path):
+def MetsMath(carttype, weight, path):
         dist = nodeDist(path)
         METs = GetMets(carttype, weight)
         MetsValue = weight *0.453592
-        dist = nodeDist(Node1, Node2)
         time = dist/1609.34
         caloriesburned = Mets*MetsValue*time
         return caloriesburned

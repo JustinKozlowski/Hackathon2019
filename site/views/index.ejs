@@ -14,28 +14,11 @@
             <div class="search-field">
                 <input id="search-bar" type="text" placeholder="Look for an item..."/>
             </div>
-            <div class="results"></div>
+            <div class="search-suggestions">
+                <ul id="results"></ul>
+            </div>
+            <div class="shopping-list"></div>
         </div>
+        <script src="/javascripts/search.js"></script>
     </body>
-    <script type="text/javascript">
-     var timeout, item;
-     var searchBar = document.querySelector('#search-bar');
-
-     function getItem(item) {
-         console.log('Getting item ' + item);
-     }
-
-     searchBar.addEventListener('keydown', event => {
-
-         if (timeout) {
-             clearTimeout(timeout);
-             timeout = null;
-         }
-
-         item = searchBar.value;
-         timeout = setTimeout(function() {
-             getItem(item);
-         }, 1000);
-     });
-    </script>
 </html>

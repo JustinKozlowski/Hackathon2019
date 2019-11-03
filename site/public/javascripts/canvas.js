@@ -40,7 +40,8 @@ var canvas, ctx, flag = false,
 
         var canvas = document.getElementById("layer1"),
                 ctx = canvas.getContext("2d"),
-                image = document.getElementById("wegmansUncropped");
+                image = new Image();
+		image.src = "../../../wegmansUncropped";
 
         canvas.height = 495;
         canvas.width = 782;

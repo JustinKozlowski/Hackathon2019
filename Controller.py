@@ -67,6 +67,7 @@ np_img[np_img > 0] = 1
 
 APIurl = 'https://api.wegmans.io/products/'
 APIurl2 = '/locations/83?api-version=2018-10-18&subscription-key=ac6e23a3e7b843d6a92a0668aa012037'
+APIurl3 = '?api-version=2018-10-18&subscription-key=ac6e23a3e7b843d6a92a0668aa012037'
 
 
 
@@ -77,13 +78,26 @@ def itemList(items):
     itemList = []
     for x in items:
         locinfo = (requests.get(APIurl + x['sku'] + APIurl2)).json()
-
+        weight = (requests.get(APIurl + x['sku'] + APIurl3)).json()['trafeIdentifiers'][0]['weight']
         node = {'item': x['item'],
+                'aisle':locinfo['locations'][0]['name'],
+                'side':locinfo['locations'][0]['aisleSide'],
+                'sort':locinfo['locations'][0]['sort'],
+                'weight':weight
+                }
+        itemList+=node
+    return itemList
 
+def getItemWeight(weight):
+    measure = weight['unitOfMeasure']
+    if measure == 'OZ' or measure == 'ONZ':
+        return weight['value']/16
+    else:
+        return weight['value']
 
 def start(dataJson):
-    items = dataJson['items']
-    sortedList = mySort(dataJson['items'], dataJson['workout']}
+    items = itemJist(dataJson['items'])
+    sortedList = mySort(items, dataJson['workout']}
     Node1 = nodeLoc(items[0]['aisle'], items[0]['sort'], items[0]['side'])
     path = []
     caloriesBurned = 0
@@ -92,8 +106,8 @@ def start(dataJson):
         Node2 = nodeLoc(items[x]['aisle'], items[x]['sort'], items[x]['side'])
         tempPath = bfs(np_img, Node1, Node2)
         path+=tempPath
-        caloriesBurned = MetsMath(dataJson['carttype'],weight, tempPath)
-        itemWeight = 
+        itemWeight = getItemWeight()
+        caloriesBurned = MetsMath(dataJson['carttype'],itemWeight, tempPath)
         weight += itemWeight
         
 

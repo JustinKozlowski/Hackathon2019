@@ -4,7 +4,7 @@ def nodeLoc(aisle, sort, side):
     nodeDict = {
             "Dairy": [53,5],
             "Service Meat":[105,9],
-            "Cheese Shop": [79:9],
+            "Cheese Shop": [79,9],
             "Floral":[77,15],
             "Mediterranean Bar":[81,24],
             "Deli":[96,16],
@@ -54,7 +54,7 @@ def nodeLoc(aisle, sort, side):
     if len(aisle) > 3:
         x = nodeDict[aisle][0]
         y = nodeDict[aisle][1]
-    else if len(aisle) == 3:
+    elif len(aisle) == 3:
         x = nodeDict[aisle[:2]][side]
         y = nodeDict[aisle[2:]]
     else:

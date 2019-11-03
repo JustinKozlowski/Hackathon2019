@@ -3,6 +3,7 @@
     <head>
         <title><%= title %></title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="/javascripts/canvas.js"></script>
     </head>
     <body>
         <h1><%= title %></h1>
@@ -20,11 +21,12 @@
             <div class="shopping-list"></div>
         </div>
         <script src="/javascripts/search.js"></script>
-	<script src="/javascript/canvas.js">
-   	</script>
 	<div style="position: relative;">
- 		<canvas id="layer1" width="782" height="495" style="position: absolute; left: 0; top: 500; z-index: 0;"></canvas>
- 		<canvas id="layer2" width="782" height="495" style="position: absolute; left: 0; top: 500; z-index: 1;"></canvas>
+ 		<canvas id="layer1" width="782" height="495" style="position: absolute; left: 0; top: 500px; z-index: 0;"></canvas>
+ 		<canvas id="layer2" width="782" height="495" style="position: absolute; left: 0; top: 500px; z-index: 1;"></canvas>
 	</div>
+    <div style="display:none;">
+        <img src="/images/wegmansUncropped.PNG" id="hiddenImage" alt="wegmans" />
+    </div>
     </body>
 </html>

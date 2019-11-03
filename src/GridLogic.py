@@ -2,7 +2,7 @@ def sortFunc(itemDict):
     return itemDict['sort']
 
 
-def main(productList, workout):
+def mySort(productList, workout):
     myList = productList
     myList.sort(key = sortFunc)
     if(workout):
@@ -14,3 +14,4 @@ def main(productList, workout):
             else:
                 myList[x] = listHold[(x+1)/2 - 1]
     return myList
+    

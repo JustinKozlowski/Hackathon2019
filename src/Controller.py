@@ -4,7 +4,7 @@ from PIL import Image
 import numpy as np
 import requests
 
-#from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request
 #from flask_socketio import SocketIO
 import eventlet
 import socket
@@ -15,7 +15,7 @@ eventlet.monkey_patch()
 #app = Flask(__name__)
 #socket_server = SocketIO(app)
 model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-model_socket.connect(('localhost', 8000)) #only if main is active
+model_socket.connect(('localhost', 8110)) #only if main is active
 
 
 def listen_to_model(the_socket):

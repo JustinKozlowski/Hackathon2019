@@ -2,6 +2,7 @@ import GridLgic.py
 import METsMath.py
 from PIL import Image
 import numpy as np
+import requests
 
 #from flask import Flask, send_from_directory, request
 #from flask_socketio import SocketIO
@@ -58,22 +59,43 @@ Thread(target=listen_to_model, args=(model_socket,)).start()
 #
 #
 #
-img = Image.open('bw_wegmans.png').convert('L')
+img = Image.open('wegmans.PNG').convert('L')
 
 np_img = np.array(img)
 np_img[np_img > 0] = 1
 
 
+APIurl = 'https://api.wegmans.io/products/'
+APIurl2 = '/locations/83?api-version=2018-10-18&subscription-key=ac6e23a3e7b843d6a92a0668aa012037'
+
+
+
 def getNewGrid():
     return np_img
+
+def itemList(items):
+    itemList = []
+    for x in items:
+        locinfo = (requests.get(APIurl + x['sku'] + APIurl2)).json()
+
+        node = {'item': x['item'],
 
 
 def start(dataJson):
     items = dataJson['items']
     sortedList = mySort(dataJson['items'], dataJson['workout']}
     Node1 = nodeLoc(items[0]['aisle'], items[0]['sort'], items[0]['side'])
+    path = []
+    caloriesBurned = 0
+    weight = 0
     for x in range(1,len(items)):
         Node2 = nodeLoc(items[x]['aisle'], items[x]['sort'], items[x]['side'])
+        tempPath = bfs(np_img, Node1, Node2)
+        path+=tempPath
+        caloriesBurned = MetsMath(dataJson['carttype'],weight, tempPath)
+        itemWeight = 
+        weight += itemWeight
+        
 
 
 

@@ -51,12 +51,15 @@ def nodeLoc(aisle, sort, side):
             "B":20
             }
 
-
-    if aisle == None:
-        test
+    if len(aisle) > 3:
+        x = nodeDict[aisle][0]
+        y = nodeDict[aisle][1]
+    else if len(aisle) == 3:
+        x = nodeDict[aisle[:2]][side]
+        y = nodeDict[aisle[2:]]
     else:
-        y= nodeDict[aisle[:2]]
-        x = nodeDict[aisle[2:]]
+        x = nodeDict[aisle][0]
+        y = nodeDict[aisle][1]
     return [x, y]
 
 
@@ -69,12 +72,11 @@ def bfs(grid, start, goal):
         if grid[y][x] == goal:
             return path
         for x2, y2 in ((x+1,y), (x-1,y), (x,y+1), (x,y-1)):
-            if 0 <= x2 < width and 0 <= y2 < height and grid[y2][x2] != wall and (x2, y2) not in seen:
+            if 0 <= x2 < 120 and 0 <= y2 < 76 and grid[y2][x2] != 0 and (x2, y2) not in seen:
                 queue.append(path + [(x2, y2)])
                 seen.add((x2, y2))
 
-def nodeDist(Node1, Node2):
-    path = bfs(grid, Node1, Node2)
+def nodeDist(path):
     dist = len(path)
     return dist
 
@@ -88,8 +90,8 @@ def GetMets(carttype, weight):
         else:
             return (weight*0.133 + 1)
 
-def MetsMath(Node1, Node2, carttype, weight):
-        dist = node1 - node2
+def MetsMath(Node1, Node2, carttype, weight, path):
+        dist = nodeDist(path)
         METs = GetMets(carttype, weight)
         MetsValue = weight *0.453592
         dist = nodeDist(Node1, Node2)

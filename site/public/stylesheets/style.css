@@ -6,3 +6,14 @@ body {
 a {
   color: #00B7FF;
 }
+
+.item {
+  font-weight: bold;
+  height: 50px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.item:nth-of-type(odd) {
+  background-color: #DDDDDD;
+}

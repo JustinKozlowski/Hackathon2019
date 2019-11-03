@@ -5,20 +5,25 @@ var nameURL = 'https://api.wegmans.io/products/';
 var suggestions = document.querySelector('#search-suggestions');
 var resultsArea = document.querySelector('#results');
 var key = 'f8f8d72eec2649b1a35aa192f7746c3b';
-
+var list = {};
 
 function renderResponse(res) {
     console.log(JSON.stringify(res));
-     res.results.forEach(result => renderResult(result.name));
+    res.results.forEach(function(result) {
+        // cart.addToCart(result);
+        renderResult(result.name);
+    });
 }
 
-
 function renderResult(name) {
+
     var resultNode = document.createElement('li');
+    resultNode.setAttribute('class', 'item');
     const resultName = document.createTextNode(name);
     resultNode.appendChild(resultName);
     resultsArea.appendChild(resultNode);
 }
+
 
 
 async function getItem(item) {
@@ -33,7 +38,7 @@ async function getItem(item) {
 }
 
 
-searchBar.addEventListener('keydown', event => {
+searchBar.addEventListener('keyup', event => {
     resultsArea.innerHTML = "";
 
     if (timeout) {

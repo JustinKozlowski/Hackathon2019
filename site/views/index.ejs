@@ -3,22 +3,49 @@
     <head>
         <title><%= title %></title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" />
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
     </head>
     <body>
         <h1><%= title %></h1>
         <p>Welcome to <%= title %></p>
-        <div class="search-container">
-            <div class="header">
-                Add Items To Cart
+        <div class="search-container col-md-10">
+            <div class="workout-option">
+                <input type="checkbox" name="workout" value="workout" />
+                <label for="workout">I want a workout!</label>
             </div>
-            <div class="search-field">
-                <input id="search-bar" type="text" placeholder="Look for an item..."/>
-            </div>
-            <div class="search-suggestions">
-                <ul id="results"></ul>
+            <div class="results-and-cart row">
+                <div class="results col-md-6">
+                    <div class="header">
+                        Add Items To Cart
+                    </div>
+                    <div class="search-field">
+                        <input id="search-bar" type="text" placeholder="Look for an item..."/>
+                    </div>
+                    <div class="search-suggestions">
+                        <ul id="results"></ul>
+                    </div>
+                </div>
+                <div class="cart">
+                    <h2>Items in cart</h2>
+                    <ul id="cart-items"></ul>
+                </div>
             </div>
             <div class="shopping-list"></div>
         </div>
         <script src="/javascripts/search.js"></script>
+        <script type="text/javascript">
+            function addToCart(row) {
+                
+            }
+
+            $(".item").on("click", function(e) {
+                addToCart()
+            })
+        </script>
+
     </body>
 </html>

@@ -1,3 +1,12 @@
+import collections
+
+def getSide(str):
+    if str == 'left':
+        return 0
+    else:
+        return 1
+
+
 def nodeLoc(aisle, sort, side):
     x = 0
     y = 0
@@ -55,7 +64,7 @@ def nodeLoc(aisle, sort, side):
         x = nodeDict[aisle][0]
         y = nodeDict[aisle][1]
     elif len(aisle) == 3:
-        x = nodeDict[aisle[:2]][side]
+        x = nodeDict[aisle[:2]][getSide(side)]
         y = nodeDict[aisle[2:]]
     else:
         x = nodeDict[aisle][0]
@@ -69,7 +78,7 @@ def bfs(grid, start, goal):
     while queue:
         path = queue.popleft()
         x, y = path[-1]
-        if grid[y][x] == goal:
+        if y == goal[1] and x == goal[0]:
             return path
         for x2, y2 in ((x+1,y), (x-1,y), (x,y+1), (x,y-1)):
             if 0 <= x2 < 120 and 0 <= y2 < 76 and grid[y2][x2] != 0 and (x2, y2) not in seen:
@@ -95,5 +104,5 @@ def MetsMath(carttype, weight, path):
         METs = GetMets(carttype, weight)
         MetsValue = weight *0.453592
         time = dist/1609.34
-        caloriesburned = Mets*MetsValue*time
+        caloriesburned = METs*MetsValue*time
         return caloriesburned

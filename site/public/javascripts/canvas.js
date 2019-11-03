@@ -3,34 +3,33 @@ window.onload = function() {
     var canvas, ctx, flag = false, prevX = 0, currX = 0, prevY = 0, currY = 0, dot_flag = false;
     var x = "red", y = 3;
 
-    // function init() {
-    //     canvas = document.getElementById('#layer2');
-    //     ctx = canvas.getContext("2d");
-    //     w = canvas.width;
-    //     h = canvas.height;
-    // }
+    function init() {
+        canvas2 = document.getElementById('#layer2');
+        ctx = canvas2.getContext("2d");
+        w = canvas2.width;
+        h = canvas2.height;
+    }
 
 
-    // function draw(path) {
-	// 	var prevX = path[0][0];
-	// 	var prevY = path[0][1];
-	// 	var myLen = path.length;
-	// 	for(var i=1;i<myLen;i++){
-	// 		currX=path[i][0];
-	// 		currY=path[i][1];
-	// 	    ctx.beginPath();
-    //         ctx.moveTo(prevX, prevY);
-    //         ctx.lineTo(currX, currY);
-    //         ctx.strokeStyle = x;
-    //         ctx.lineWidth = y;
-    //         ctx.stroke();
-    //         ctx.closePath();
-	// 		prevX = currX;
-	// 		prevY = currY;
-	// 	}
+    function draw(path) {
+		var prevX = path[0][0];
+		var prevY = path[0][1];
+		var myLen = path.length;
+		for(var i=1;i<myLen;i++){
+			currX=path[i][0];
+			currY=path[i][1];
+		    ctx.beginPath();
+            ctx.moveTo(prevX, prevY);
+            ctx.lineTo(currX, currY);
+            ctx.strokeStyle = x;
+            ctx.lineWidth = y;
+            ctx.stroke();
+            ctx.closePath();
+			prevX = currX;
+			prevY = currY;
+		}
 
-    // }
-
+    }
 
     var canvas = document.getElementById("layer1");
     var ctx = canvas.getContext("2d");

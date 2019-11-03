@@ -14,13 +14,10 @@ from threading import Thread
 #eventlet.monkey_patch()
 app = Flask(__name__)
 #socket_server = SocketIO(app)
-<<<<<<< HEAD:Controller.py
 #model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #model_socket.connect(('localhost', 8000)) #only if main is active
-=======
-model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-model_socket.connect(('localhost', 8110)) #only if main is active
->>>>>>> 9d26b10cf6bdcd657f444572ac10ead06e0ae0aa:src/Controller.py
+# model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# model_socket.connect(('localhost', 8110)) #only if main is active
 
 
 #def listen_to_model(the_socket):
@@ -37,18 +34,22 @@ model_socket.connect(('localhost', 8110)) #only if main is active
 #
 #
 #Thread(target=listen_to_model, args=(model_socket,)).start()
+@app.route('/')
+def index():
+    print("here")
+    return("hello World")
 
-
-@app.route('/array/', methods=["POST"])
+@app.route('/array/')
 def array():
-    if request.method == "POST"
-    JsonData = request.form['Json']
-    dataJson = json.loads(message)
-    output = start(dataJson)
-    jsonOut = json.dumps(output)
-    url = 'localhost:3000'
-    x = requests.post(url, data = jsonOut)
-    print(x.text)
+        print('here')
+        JsonData = request.form['Json']
+        dataJson = json.loads(message)
+        output = start(dataJson)
+        jsonOut = json.dumps(output)
+        url = 'localhost:3000'
+        x = requests.post(url, data = jsonOut)
+        print(x.text)
+        return("sent data")
 
 #@socket_server.on('Jason')
 #def got_message(jason):
@@ -59,7 +60,6 @@ def array():
 #
 app_port = 8505
 print("server at localhost:" + str(app_port))
-socket_server.run(app, port=app_port)
 #
 #
 #
@@ -79,18 +79,17 @@ def getNewGrid():
     return np_img
 
 def itemList(items):
-    itemList = []
+    myitemList = []
     for x in items:
         locinfo = (requests.get(APIurl + x['sku'] + APIurl2)).json()
-        weight = (requests.get(APIurl + x['sku'] + APIurl3)).json()['trafeIdentifiers'][0]['weight']
+        weight = (requests.get(APIurl + x['sku'] + APIurl3)).json()['tradeIdentifiers'][0]['weight']
         node = {'item': x['item'],
                 'aisle':locinfo['locations'][0]['name'],
                 'side':locinfo['locations'][0]['aisleSide'],
                 'sort':locinfo['locations'][0]['sort'],
                 'weight':weight
                 }
-        itemList+=node
-    return itemList
+    return myitemList
 
 def getItemWeight(weight):
     measure = weight['unitOfMeasure']
@@ -107,12 +106,15 @@ def start(dataJson):
     caloriesBurned = 0
     weight = 0
     for x in range(len(items)):
-        Node2 = nodeLoc(items[x]['aisle'], items[x]['sort'], items[x]['side'])
-        tempPath = bfs(np_img, Node1, Node2)
+        Node2 = METsMath.nodeLoc(items[x]['aisle'], items[x]['sort'], items[x]['side'])
+        tempPath = METsMath.bfs(np_img, Node1, Node2)
         path+=tempPath
-        itemWeight = getItemWeight()
-        caloriesBurned += MetsMath(dataJson['carttype'],weight, tempPath)
+        itemWeight = getItemWeight(items[x]['weight'])
+        caloriesBurned += METsMath.MetsMath(dataJson['carttype'],weight, tempPath)
         weight += itemWeight
     return {'paths':path,'calories':caloriesBurned}
 
+jsonTest = {'items': [{'item': 'RD Morton Salt', 'sku': '124524'}, {'item': 'Bread', 'sku':'391882'}], 'workout': True, 'carttype': 'cart'}
+start(jsonTest);
 
+app.run(debug=True, port=app_port)

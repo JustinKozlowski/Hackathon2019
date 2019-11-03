@@ -4,18 +4,23 @@ from PIL import Image
 import numpy as np
 import requests
 
-#from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request
 #from flask_socketio import SocketIO
 import eventlet
 import socket
 import json
 from threading import Thread
 
-eventlet.monkey_patch()
+#eventlet.monkey_patch()
 app = Flask(__name__)
 #socket_server = SocketIO(app)
+<<<<<<< HEAD:Controller.py
 #model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #model_socket.connect(('localhost', 8000)) #only if main is active
+=======
+model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+model_socket.connect(('localhost', 8110)) #only if main is active
+>>>>>>> 9d26b10cf6bdcd657f444572ac10ead06e0ae0aa:src/Controller.py
 
 
 #def listen_to_model(the_socket):
@@ -27,25 +32,24 @@ app = Flask(__name__)
 #            message = buffer[:buffer.find(delimiter)]
 #            buffer = buffer[buffer.find(delimiter)+1:]
 #            #do something with message
-#            dataJson = json.loads(message)
-#            output = start(dataJson)
-#            jsonOut = json.dumps(output)
+#            
 #            socket_server.emit('message', jsonToAll, broadcast=True)
-
-
+#
+#
 #Thread(target=listen_to_model, args=(model_socket,)).start()
 
 
-@app.route('/array', methods=["POST"])
+@app.route('/array/', methods=["POST"])
 def array():
-    JsonData = request.form['json']
-    dataJson = json.loads(JsonData)
+    if request.method == "POST"
+    JsonData = request.form['Json']
+    dataJson = json.loads(message)
     output = start(dataJson)
     jsonOut = json.dumps(output)
     url = 'localhost:3000'
-    x = request.post(url, data = jsonOut)
-#
-#
+    x = requests.post(url, data = jsonOut)
+    print(x.text)
+
 #@socket_server.on('Jason')
 #def got_message(jason):
 #    data = {"action": "regular", "data": json.loads(jason)}
@@ -98,7 +102,7 @@ def getItemWeight(weight):
 def start(dataJson):
     items = itemList(dataJson['items'])
     sortedList = GridLogic.mySort(items, dataJson['workout'])
-    Node1 = (84,67
+    Node1 = (84,67)
     path = []
     caloriesBurned = 0
     weight = 0

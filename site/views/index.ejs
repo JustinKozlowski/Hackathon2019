@@ -14,8 +14,13 @@
         <p>Welcome to <%= title %></p>
         <div class="search-container col-md-10">
             <div class="workout-option">
-                <input type="checkbox" name="workout" value="workout" />
+                <input type="checkbox" id="workout" value="workout" />
                 <label for="workout">I want a workout!</label>
+            </div>
+            <div class="cart-type">
+                <input type="checkbox" id="cart-type" value="cart" />
+                <label for="cart-type">Check if you will be pushing a cart,
+                leave unchecked to carry a basket.</label>
             </div>
             <div class="results-and-cart row">
                 <div class="results col-md-6">
@@ -30,7 +35,10 @@
                     </div>
                 </div>
                 <div class="cart">
-                    <h2>Items in cart</h2>
+                    <div class="row">
+                        <h2>Items in cart</h2>
+                        <button class="btn-primary" id="submit">Submit Cart</button>
+                    </div>
                     <ul id="cart-items"></ul>
                 </div>
             </div>
@@ -38,14 +46,39 @@
         </div>
         <script src="/javascripts/search.js"></script>
         <script type="text/javascript">
-            function addToCart(row) {
+            var selectedItems = [];
+            var cartArea = document.querySelector('#cart-items');
+            function parseName(nameToParse) {
+                console.log(nameToParse);
+                const pivot = nameToParse.indexOf('SKU');
+                var parsedName = nameToParse.substring(0, pivot);
+                var parsedSKU = nameToParse.substring(pivot + 5);
                 
+                return [parsedName, parsedSKU];
             }
 
-            $(".item").on("click", function(e) {
-                addToCart()
-            })
-        </script>
+            const addToCart = function(data) {
+                selectedItems.push({
+                    'name': data[0],
+                    'sku': data[1]}); 
+                var newRow = document.createElement('li');
+                newRow.setAttribute('class', 'item');
+                var text = document.createTextNode(data[0]);
+                newRow.appendChild(text);
+                cartArea.appendChild(newRow);
+            }
 
+            $("button#submit").on('click', function(e) {
+                var workoutSelection = $("#workout").checked;
+                var cartType = $("#cart-type").checked;
+                var postData = {
+                    'items': selectedItems,
+                    'workout': workoutSelection,
+                    'cartType': cartType
+                }
+
+            })
+
+        </script>
     </body>
 </html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <p>Welcome to <%= title %></p>
+        <div class="search-container">
+            <div class="header">
+                Add Items To Cart
+            </div>
+            <div class="search-field">
+                <input id="search-bar" type="text" placeholder="Look for an item..."/>
+            </div>
+            <div class="search-suggestions">
+                <ul id="results"></ul>
+            </div>
+            <div class="shopping-list"></div>
+        </div>
+        <script src="/javascripts/search.js"></script>
+    </body>
+</html>

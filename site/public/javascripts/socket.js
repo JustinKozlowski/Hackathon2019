@@ -2,7 +2,7 @@ var socket = require('socket.io-client')('http://localhost:8110', {transports:['
  //transports: ['websocket']
 socket.on('connect', function (event) {
     console.log("connected")
-    socket.emit("register", "testing", JSON.stringify({"test":True})
+//    socket.emit("register", "testing", JSON.stringify({"test":True})
 });
 socket.on('message', function (event) {
     // received a message from the server

@@ -1,5 +1,5 @@
-import GridLgic.py
-import METsMath.py
+import GridLogic
+import METsMath
 from PIL import Image
 import numpy as np
 import requests
@@ -13,9 +13,9 @@ from threading import Thread
 
 eventlet.monkey_patch()
 #app = Flask(__name__)
-socket_server = SocketIO(app)
+#socket_server = SocketIO(app)
 model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-model_socket.connect(('localhost', 81)) #only if main is active
+#model_socket.connect(('localhost', 8000)) #only if main is active
 
 
 def listen_to_model(the_socket):
@@ -28,13 +28,8 @@ def listen_to_model(the_socket):
             buffer = buffer[buffer.find(delimiter)+1:]
             #do something with message
             dataJson = json.loads(message)
-            start(dataJson)
-            toAll = {
-                        'items': orderedItems,
-                        'path': pathlist
-
-                    }
-            jsonOut = json.dumps(toAll)
+            output = start(dataJson)
+            jsonOut = json.dumps(output)
             socket_server.emit('message', jsonToAll, broadcast=True)
 
 
@@ -96,8 +91,8 @@ def getItemWeight(weight):
         return weight['value']
 
 def start(dataJson):
-    items = itemJist(dataJson['items'])
-    sortedList = mySort(items, dataJson['workout']}
+    items = itemList(dataJson['items'])
+    sortedList = GridLogic.mySort(items, dataJson['workout'])
     Node1 = nodeLoc(items[0]['aisle'], items[0]['sort'], items[0]['side'])
     path = []
     caloriesBurned = 0
@@ -107,12 +102,8 @@ def start(dataJson):
         tempPath = bfs(np_img, Node1, Node2)
         path+=tempPath
         itemWeight = getItemWeight()
-        caloriesBurned = MetsMath(dataJson['carttype'],itemWeight, tempPath)
+        caloriesBurned += MetsMath(dataJson['carttype'],weight, tempPath)
         weight += itemWeight
-        
-
-
-
-
+    return {'paths':path,'calories':caloriesBurned}
 
 

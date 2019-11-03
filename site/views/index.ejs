@@ -3,28 +3,96 @@
     <head>
         <title><%= title %></title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
+<<<<<<< variant A
+	<script src="/javascripts/canvas.js"></script>
+>>>>>>> variant B
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" />
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+======= end
     </head>
     <body>
         <h1><%= title %></h1>
         <p>Welcome to <%= title %></p>
-        <div class="search-container">
-            <div class="header">
-                Add Items To Cart
+        <div class="search-container col-md-10">
+            <div class="workout-option">
+                <input type="checkbox" id="workout" value="workout" />
+                <label for="workout">I want a workout!</label>
             </div>
-            <div class="search-field">
-                <input id="search-bar" type="text" placeholder="Look for an item..."/>
+            <div class="cart-type">
+                <input type="checkbox" id="cart-type" value="cart" />
+                <label for="cart-type">Check if you will be pushing a cart,
+                leave unchecked to carry a basket.</label>
             </div>
-            <div class="search-suggestions">
-                <ul id="results"></ul>
+            <div class="results-and-cart row">
+                <div class="results col-md-6">
+                    <div class="header">
+                        Add Items To Cart
+                    </div>
+                    <div class="search-field">
+                        <input id="search-bar" type="text" placeholder="Look for an item..."/>
+                    </div>
+                    <div class="search-suggestions">
+                        <ul id="results"></ul>
+                    </div>
+                </div>
+                <div class="cart">
+                    <div class="row">
+                        <h2>Items in cart</h2>
+                        <button class="btn-primary" id="submit">Submit Cart</button>
+                    </div>
+                    <ul id="cart-items"></ul>
+                </div>
             </div>
             <div class="shopping-list"></div>
         </div>
         <script src="/javascripts/search.js"></script>
-	<script src="/javascript/canvas.js">
-   	</script>
+<<<<<<< variant A
 	<div style="position: relative;">
- 		<canvas id="layer1" width="782" height="495" style="position: absolute; left: 0; top: 500; z-index: 0;"></canvas>
- 		<canvas id="layer2" width="782" height="495" style="position: absolute; left: 0; top: 500; z-index: 1;"></canvas>
+ 		<canvas id="layer1" width="782" height="495" style="position: absolute; left: 0; top: 500px; z-index: 0;"></canvas>
+ 		<canvas id="layer2" width="782" height="495" style="position: absolute; left: 0; top: 500px; z-index: 1;"></canvas>
 	</div>
+    <div style="display:none;">
+        <img src="/images/wegmansUncropped.PNG" id="hiddenImage" alt="wegmans" />
+    </div>
+>>>>>>> variant B
+        <script type="text/javascript">
+            var selectedItems = [];
+            var cartArea = document.querySelector('#cart-items');
+            function parseName(nameToParse) {
+                console.log(nameToParse);
+                const pivot = nameToParse.indexOf('SKU');
+                var parsedName = nameToParse.substring(0, pivot);
+                var parsedSKU = nameToParse.substring(pivot + 5);
+
+                return [parsedName, parsedSKU];
+            }
+
+            const addToCart = function(data) {
+                selectedItems.push({
+                    'name': data[0],
+                    'sku': data[1]});
+                var newRow = document.createElement('li');
+                newRow.setAttribute('class', 'item');
+                var text = document.createTextNode(data[0]);
+                newRow.appendChild(text);
+                cartArea.appendChild(newRow);
+            }
+
+            $("button#submit").on('click', function(e) {
+                var workoutSelection = $("#workout").checked;
+                var cartType = $("#cart-type").checked;
+                var postData = {
+                    'items': selectedItems,
+                    'workout': workoutSelection,
+                    'cartType': cartType
+                }
+
+            })
+
+        </script>
+======= end
     </body>
 </html>

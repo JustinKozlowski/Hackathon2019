@@ -4,43 +4,47 @@ from PIL import Image
 import numpy as np
 import requests
 
-#from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request
 #from flask_socketio import SocketIO
 import eventlet
 import socket
 import json
 from threading import Thread
 
-eventlet.monkey_patch()
-#app = Flask(__name__)
+#eventlet.monkey_patch()
+app = Flask(__name__)
 #socket_server = SocketIO(app)
-model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-model_socket.connect(('localhost', 8000)) #only if main is active
+#model_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#model_socket.connect(('localhost', 8000)) #only if main is active
 
 
-def listen_to_model(the_socket):
-    delimiter = "~"
-    buffer = ""
-    while True:
-        buffer += the_socket.recv(1024).decode()
-        while delimiter in buffer:
-            message = buffer[:buffer.find(delimiter)]
-            buffer = buffer[buffer.find(delimiter)+1:]
-            #do something with message
-            dataJson = json.loads(message)
-            output = start(dataJson)
-            jsonOut = json.dumps(output)
-            socket_server.emit('message', jsonToAll, broadcast=True)
-
-
-Thread(target=listen_to_model, args=(model_socket,)).start()
-
-
-#@app.route('/')
-#def index():
-#    return send_from_directory('../frontend', 'web.html')
+#def listen_to_model(the_socket):
+#    delimiter = "~"
+#    buffer = ""
+#    while True:
+#        buffer += the_socket.recv(1024).decode()
+#        while delimiter in buffer:
+#            message = buffer[:buffer.find(delimiter)]
+#            buffer = buffer[buffer.find(delimiter)+1:]
+#            #do something with message
+#            
+#            socket_server.emit('message', jsonToAll, broadcast=True)
 #
 #
+#Thread(target=listen_to_model, args=(model_socket,)).start()
+
+
+@app.route('/array/', methods=["POST"])
+def array():
+    if request.method == "POST"
+    JsonData = request.form['Json']
+    dataJson = json.loads(message)
+    output = start(dataJson)
+    jsonOut = json.dumps(output)
+    url = 'localhost:3000'
+    x = requests.post(url, data = jsonOut)
+    print(x.text)
+
 #@socket_server.on('Jason')
 #def got_message(jason):
 #    data = {"action": "regular", "data": json.loads(jason)}
@@ -48,9 +52,9 @@ Thread(target=listen_to_model, args=(model_socket,)).start()
 #    model_socket.sendall((json.dumps(data) + delimiter).encode())
 #
 #
-#app_port = 8505
-#print("server at localhost:" + str(app_port))
-#socket_server.run(app, port=app_port)
+app_port = 8505
+print("server at localhost:" + str(app_port))
+socket_server.run(app, port=app_port)
 #
 #
 #

@@ -1,0 +1,19 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.item {
+  font-weight: bold;
+  height: 50px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.item:nth-of-type(odd) {
+  background-color: #DDDDDD;
+}
